@@ -1,0 +1,4 @@
+go-keywords
+go-keywords is an attempt to port over the npm package keyword-extractor. It is not as in depth as its npm package, but gets the work done. go-keywords works with both regular strings, and html data.
+
+Why? While in search for a simple keyword extractor, i came across a few packages that uses the RAKE concept, but for my use case to simply extract individual keywords, it wasnt sufficient.

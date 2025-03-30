@@ -10,8 +10,10 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/main.go",
-            //"args": ["web","https://github.com","test.txt"]
-            "args": ["text","input.txt","output.txt"]
+            //"args": ["method1","web","https://github.com","example_data/output.txt"]
+            //"args": ["method1","text","example_data/input.txt","example_data/output.txt"]
+           // "args": ["method2","web","https://github.com","example_data/output.txt","-t","-d","-l"]
+            //"args": ["method2","text","example_data/input.txt","example_data/output.txt"]
         }
     ]
 }

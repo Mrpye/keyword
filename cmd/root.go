@@ -14,8 +14,18 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "keyword",
-	Short: "extract keywords",
-	Long:  `extract keywords`,
+	Short: "extract keywords from different sources",
+	Long:  `extract keywords from different sources`,
+}
+var method1Cmd = &cobra.Command{
+	Use:   "method1",
+	Short: "Uses github.com/gelembjuk/articletext",
+	Long:  `Uses github.com/gelembjuk/articletext`,
+}
+var method2Cmd = &cobra.Command{
+	Use:   "method2",
+	Short: "Uses https://github.com/securisec/go-keywords",
+	Long:  `Uses https://github.com/securisec/go-keywords`,
 }
 
 func GenerateDoc() *cobra.Command {
@@ -41,7 +51,7 @@ func Execute() {
 
 	err := rootCmd.Execute()
 	if err != nil {
-		fmt.Println(os.Stderr, "Error:", err)
+		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
 	} else {
 		fmt.Println("Completed")
@@ -54,5 +64,7 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	rootCmd.PersistentFlags().BoolP("help", "", false, "help for this command")
 	rootCmd.AddCommand(GenerateDoc())
+	rootCmd.AddCommand(method1Cmd)
+	rootCmd.AddCommand(method2Cmd)
 
 }

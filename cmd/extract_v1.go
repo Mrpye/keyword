@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/gelembjuk/articletext"
@@ -10,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func ExtractText_Command() *cobra.Command {
+func ExtractTextV1_Command() *cobra.Command {
 
 	//var config_path string
 	//var web_port string
@@ -18,8 +17,8 @@ func ExtractText_Command() *cobra.Command {
 
 	var cmd = &cobra.Command{
 		Use:   "text",
-		Short: "Extract text file",
-		Long:  "Extract text file",
+		Short: "Extract keywords from text file",
+		Long:  "Extract keywords from text file",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) < 1 {
 				fmt.Println("No URL provided")
@@ -32,7 +31,7 @@ func ExtractText_Command() *cobra.Command {
 			// get URL from command line argument
 
 			textfile := args[0]
-			filecontents, _ := ioutil.ReadFile(textfile)
+			filecontents, _ := os.ReadFile(textfile)
 
 			text := string(filecontents)
 
@@ -45,16 +44,14 @@ func ExtractText_Command() *cobra.Command {
 			// write to a file
 			file, err := os.Create(args[1])
 			if err != nil {
-				fmt.Println(err.Error())
-				os.Exit(3)
+				return fmt.Errorf("error creating file: %v", err)
 			}
 			defer file.Close()
 
 			for _, phrase := range phrases {
 				_, err = file.WriteString(phrase + "\n")
 				if err != nil {
-					fmt.Println(err.Error())
-					os.Exit(4)
+					return fmt.Errorf("error writing to file: %v", err)
 				}
 				fmt.Println(phrase)
 			}
@@ -68,7 +65,7 @@ func ExtractText_Command() *cobra.Command {
 	return cmd
 
 }
-func ExtractWebpage_Command() *cobra.Command {
+func ExtractWebpageV1_Command() *cobra.Command {
 
 	//var config_path string
 	//var web_port string
@@ -76,8 +73,8 @@ func ExtractWebpage_Command() *cobra.Command {
 
 	var cmd = &cobra.Command{
 		Use:   "web",
-		Short: "Extract Webpage",
-		Long:  "Extract Webpage",
+		Short: "Extract keywords from Webpage",
+		Long:  "Extract keywords from Webpage",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if len(args) < 1 {
 				fmt.Println("No URL provided")
@@ -113,16 +110,14 @@ func ExtractWebpage_Command() *cobra.Command {
 			// write to a file
 			file, err := os.Create(args[1])
 			if err != nil {
-				fmt.Println(err.Error())
-				os.Exit(3)
+				return fmt.Errorf("Error creating file: %v", err)
 			}
 			defer file.Close()
 
 			for _, phrase := range phrases {
 				_, err = file.WriteString(phrase + "\n")
 				if err != nil {
-					fmt.Println(err.Error())
-					os.Exit(4)
+					return fmt.Errorf("error writing to file: %v", err)
 				}
 				fmt.Println(phrase)
 			}
@@ -138,7 +133,7 @@ func ExtractWebpage_Command() *cobra.Command {
 }
 func init() {
 
-	rootCmd.AddCommand(ExtractText_Command())
-	rootCmd.AddCommand(ExtractWebpage_Command())
+	method1Cmd.AddCommand(ExtractTextV1_Command())
+	method1Cmd.AddCommand(ExtractWebpageV1_Command())
 
 }
